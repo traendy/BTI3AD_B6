@@ -12,98 +12,46 @@ import java.util.Collections;
  */
 public class Benchmark {
 	private static String[] sorted = null;
-	private static String[] shuffled = null;
+	private static String[] shuffledQuick = null;
+	private static String[] shuffledMultiQuick = null;
 	private static Counter counter = null;
 	private static int numberOfRuns = 10;
 	private static long timeEnd = 0;
 	private static long timeStart = 0;
-
+  private static long timeEndQuick = 0;
+  private static long timeStartQuick = 0;  
+  private static long timeEndMultiQuick = 0;
+  private static long timeStartMultiQuick = 0;
 	public static void main(String[] args) {
 		counter = new Counter();
+		StringBuilder builder = new StringBuilder();
+		builder.append("N").append("\tQCount").append("\tQTime").append("\tMCount").append("\tMTime").append("\n");
+		for(int arraySize =1; arraySize<8; arraySize++){
+		  builder.append(arraySize);
 		
-		for (int i = 0; i < numberOfRuns; i++) {
-			generateData(2);
-			counter = new Counter();
-//			DualPivotQuicksort dpq = new DualPivotQuicksort(counter);
-//			//timeStart = System.currentTimeMillis();
-//			timeStart = System.nanoTime();
-//			dpq.sort(shuffled);
-//			//timeEnd = System.currentTimeMillis();
-//			timeEnd = System.nanoTime();
-//			System.out.println("DualPivotQuicksort: \t" + counter.getCounter() + "\nBenötigte Zeit: \t"
-//					+ (timeEnd - timeStart) + "\n");
-//
-//			counter.setCounter(0);
-//			Gnomesort gs = new Gnomesort(counter);
-//			timeStart = System.currentTimeMillis();
-//			//timeStart = System.nanoTime();
-//			gs.sort(shuffled);
-//			timeEnd = System.currentTimeMillis();
-//			//timeEnd = System.nanoTime();
-//			System.out.println(
-//					"Gnomesort: \t" + counter.getCounter() + "\nBenötigte Zeit: \t" + (timeEnd - timeStart) + "\n");
-//
-//			counter.setCounter(0);
-//			HybridCombsort hcs = new HybridCombsort(counter);
-//			timeStart = System.currentTimeMillis();
-//			//timeStart = System.nanoTime();
-//			hcs.sort(shuffled);
-//			timeEnd = System.currentTimeMillis();
-//			//timeEnd = System.nanoTime();
-//			System.out.println(
-//					"HybridCombsort: \t" + counter.getCounter() + "\nBenötigte Zeit: \t" + (timeEnd - timeStart) + "\n");
-//
-//			counter.setCounter(0);
-//			Insertionsort insertionsort = new Insertionsort(counter);
-//			timeStart = System.currentTimeMillis();
-//			//timeStart = System.nanoTime();
-//			insertionsort.sort(shuffled);
-//			timeEnd = System.currentTimeMillis();
-//			//timeEnd = System.nanoTime();
-//			System.out.println(
-//					"Insertionsort: \t" + counter.getCounter() + "\nBenötigte Zeit: \t" + (timeEnd - timeStart) + "\n");
-//
-//			counter.setCounter(0);
-//			Introsort is = new Introsort(counter);
-//			timeStart = System.currentTimeMillis();
-//			//timeStart = System.nanoTime();
-//			is.sort(shuffled);
-//			timeEnd = System.currentTimeMillis();
-//			//timeEnd = System.nanoTime();
-//			System.out.println(
-//					"Introsort: \t" + counter.getCounter() + "\nBenötigte Zeit: \t" + (timeEnd - timeStart) + "\n");
-//
-//			counter.setCounter(0);
-//			MultikeyQuicksort mkq = new MultikeyQuicksort(counter);
-//			timeStart = System.currentTimeMillis();
-//			//timeStart = System.nanoTime();
-//			mkq.sort(shuffled);
-//			timeEnd = System.currentTimeMillis();
-//			//timeEnd = System.nanoTime();
-//			System.out.println(
-//					"MultikeyQuicksort: \t" + counter.getCounter() + "\nBenötigte Zeit: \t" + (timeEnd - timeStart) + "\n");
-//
-//			counter.setCounter(0);
-//			Quicksort qs = new Quicksort(counter);
-//			timeStart = System.currentTimeMillis();
-////			timeStart = System.nanoTime();
-//			qs.sort(shuffled);
-//			timeEnd = System.currentTimeMillis();
-////			timeEnd = System.nanoTime();
-//			System.out.println(
-//					"Quicksort: \t" + counter.getCounter() + "\nBenötigte Zeit: \t" + (timeEnd - timeStart) + "\n");
-//
-			counter.setCounter(0);
-			Shellsort ss = new Shellsort(counter);
-			timeStart = System.currentTimeMillis();
-//			timeStart = System.nanoTime();
-			ss.sort(shuffled);
-			timeEnd = System.currentTimeMillis();
-//			timeEnd = System.nanoTime();
-			System.out.println(
-					i+"Shellsort: \t" + counter.getCounter() + "\nBenötigte Zeit: \t" + (timeEnd - timeStart) + "\n");
-//			System.out.println("alle fertig");
+  		for (int i = 0; i < numberOfRuns; i++) {
+  		  
+  			generateData(arraySize);
+  			
+  			counter = new Counter();
+  			Quicksort quicksort = new Quicksort(counter);
+  			timeStartQuick = System.currentTimeMillis();
+  			quicksort.sort(shuffledQuick);
+  			timeEndQuick = System.currentTimeMillis();
+  			
+  			builder.append("\t").append(counter.getCounter()).append("\t").append(timeEndQuick-timeStartQuick);
+  			
+  			counter.setCounter(0);
+  			MultikeyQuicksort multisort = new MultikeyQuicksort(counter);
+  			timeStartMultiQuick = System.currentTimeMillis();
+  			multisort.sort(shuffledMultiQuick);
+  			timeEndMultiQuick = System.currentTimeMillis();
+  			
+  			builder.append("\t").append(counter.getCounter()).append("\t").append(timeEndMultiQuick-timeStartMultiQuick).append("\n");
+  	
+  		}
 		}
+		System.out.println(builder.toString());
 	}
 
 	/**
@@ -116,7 +64,9 @@ public class Benchmark {
 	private static void generateData(int N) {
 		N = (int) Math.pow(10, N);
 		sorted = new String[N];
-		shuffled = new String[N];
+		shuffledQuick = new String[N];
+		shuffledMultiQuick = new String[N];
+    
 		ArrayList<String> list = new ArrayList<>();
 		for (int i = 0; i < N; i++) {
 			sorted[i] = String.valueOf((700 + i) * N);
@@ -124,8 +74,17 @@ public class Benchmark {
 		}
 		Collections.shuffle(list);
 		for (int i = 0; i < N; i++) {
-			shuffled[i] = list.get(i);
+			shuffledQuick[i] = list.get(i);
+			shuffledMultiQuick[i] = list.get(i);
 		}
 
+	}
+	private static void printArray(String [] s){
+	  StringBuilder builder = new StringBuilder();
+	  for(int i =0; i<s.length; i++){
+	    builder.append(sorted[i]).append("\t - \t").append(s[i]).append("\n");
+	  }
+	  System.out.println(builder.toString());
+	  
 	}
 }

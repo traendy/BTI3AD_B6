@@ -70,7 +70,7 @@ public class MultikeyQuicksort {
             ssort(strings, 0, strings.length, 0);
         }
     }
-
+    //TODO kann ggf gelöscht werden
     /**
      * Sorts the array of strings using a multikey quicksort that chooses
      * a pivot point using a "median of three" rule (or pseudo median of
@@ -121,9 +121,9 @@ public class MultikeyQuicksort {
     /**
      * The recursive portion of multikey quicksort.
      *
-     * @param  strings  the array of strings to sort.
+     * @param  a  the array of strings to sort.
      * @param  base     zero-based offset into array to be considered.
-     * @param  length   length of subarray to consider.
+     * @param  n   length of subarray to consider.
      * @param  depth    the zero-based offset into the strings.
      */
     private static void ssort(CharSequence[] a, int base, int n, int depth) {
@@ -156,7 +156,7 @@ public class MultikeyQuicksort {
                     t = a[le];
                     a[le] = a[lt];
                     a[lt] = t;
-                    count();
+                    //count();
                     le++;
                 } else {
                     allzeros = false;
@@ -167,7 +167,7 @@ public class MultikeyQuicksort {
                     t = a[gt];
                     a[gt] = a[ge];
                     a[ge] = t;
-                    count();
+                    //count();
                     ge--;
                 } else {
                     allzeros = false;
@@ -179,7 +179,7 @@ public class MultikeyQuicksort {
             t = a[lt];
             a[lt] = a[gt];
             a[gt] = t;
-            count();
+            //count();
             lt++;
             gt--;
         }
