@@ -67,7 +67,7 @@ public class MultikeyQuicksort {
      */
     public static void sort(CharSequence[] strings) {
         if (strings != null && strings.length > 1) {
-            ssort(strings, 0, strings.length, 0);
+            ssort(strings, 0, strings.length, 1);
         }
     }
     //TODO kann ggf gelöscht werden

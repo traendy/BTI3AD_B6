@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Compares the Sorting Algorithms from source
@@ -14,10 +15,12 @@ public class Benchmark {
 	private static String[] sorted = null;
 	private static String[] shuffledQuick = null;
 	private static String[] shuffledMultiQuick = null;
+	private static String[] shuffledDualPivot = null;
+  
 	private static Counter counter = null;
 	private static int numberOfRuns = 10;
-	private static long timeEnd = 0;
-	private static long timeStart = 0;
+	private static long timeEndDualPivor = 0;
+	private static long timeStartDualPivot = 0;
   private static long timeEndQuick = 0;
   private static long timeStartQuick = 0;  
   private static long timeEndMultiQuick = 0;
@@ -25,7 +28,7 @@ public class Benchmark {
 	public static void main(String[] args) {
 		counter = new Counter();
 		StringBuilder builder = new StringBuilder();
-		builder.append("N").append("\tQCount").append("\tQTime").append("\tMCount").append("\tMTime").append("\n");
+		builder.append("N").append("\tQCount").append("\tQTime").append("\tMCount").append("\tMTime").append("\tDCount").append("\tDTime").append("\n");
 		for(int arraySize =1; arraySize<8; arraySize++){
 		  builder.append(arraySize);
 		
@@ -47,11 +50,23 @@ public class Benchmark {
   			multisort.sort(shuffledMultiQuick);
   			timeEndMultiQuick = System.currentTimeMillis();
   			
-  			builder.append("\t").append(counter.getCounter()).append("\t").append(timeEndMultiQuick-timeStartMultiQuick).append("\n");
+  			builder.append("\t").append(counter.getCounter()).append("\t").append(timeEndMultiQuick-timeStartMultiQuick);
+  			
+  			counter.setCounter(0);
+        DualPivotQuicksort dualQuick = new DualPivotQuicksort(counter);
+        timeStartDualPivot = System.currentTimeMillis();
+        dualQuick.sort(shuffledDualPivot);
+        timeEndDualPivor = System.currentTimeMillis();
+        
+        builder.append("\t").append(counter.getCounter()).append("\t").append(timeEndDualPivor-timeStartDualPivot).append("\n");
   	
   		}
 		}
 		System.out.println(builder.toString());
+		/*MultikeyQuicksort mqs = new MultikeyQuicksort(counter);
+		generateData(3);
+		mqs.sort(shuffledMultiQuick);
+		printArray(shuffledMultiQuick);*/
 	}
 
 	/**
@@ -66,16 +81,18 @@ public class Benchmark {
 		sorted = new String[N];
 		shuffledQuick = new String[N];
 		shuffledMultiQuick = new String[N];
+		shuffledDualPivot = new String[N];
     
 		ArrayList<String> list = new ArrayList<>();
 		for (int i = 0; i < N; i++) {
-			sorted[i] = String.valueOf((700 + i) * N);
-			list.add(sorted[i]);
+			sorted[i] = String.valueOf(i);
+			list.add(String.valueOf(ThreadLocalRandom.current().nextInt(700*N , 800*N)));
 		}
 		Collections.shuffle(list);
 		for (int i = 0; i < N; i++) {
 			shuffledQuick[i] = list.get(i);
 			shuffledMultiQuick[i] = list.get(i);
+			shuffledDualPivot[i] = list.get(i);
 		}
 
 	}
