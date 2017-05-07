@@ -8,7 +8,7 @@
 public class Counter {
 
   /** counter ist der Zaehlwert fuer den Counter. */
-  private int counter;
+  private long counter;
 
   /**
    * Instantiates a new counter.
@@ -23,7 +23,7 @@ public class Counter {
    *
    * @return the counter
    */
-  public int getCounter() {
+  public long getCounter() {
     return counter;
   }
 
@@ -33,7 +33,7 @@ public class Counter {
    * @param counter
    *            the new counter
    */
-  public void setCounter(int counter) {
+  public void setCounter(long counter) {
     this.counter = counter;
   }
 
@@ -43,7 +43,7 @@ public class Counter {
    * @param add
    *            gibt die Zahl an, um wie viel hochgezaehlt werden soll.
    */
-  public void counterUp(int add) {
+  public void counterUp(long add) {
     this.counter = counter + add;
   }
 
