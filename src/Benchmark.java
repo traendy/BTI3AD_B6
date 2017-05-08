@@ -50,24 +50,12 @@ public class Benchmark {
   			multisort.sort(shuffledMultiQuick);
   			timeEndMultiQuick = System.currentTimeMillis();
   			
-  			builder.append("\t").append(counter.getCounter()).append("\t").append(timeEndMultiQuick-timeStartMultiQuick);
-  			
-  			counter.setCounter(0);
-        DualPivotQuicksort dualQuick = new DualPivotQuicksort(counter);
-        timeStartDualPivot = System.currentTimeMillis();
-        dualQuick.sort(shuffledDualPivot);
-        timeEndDualPivor = System.currentTimeMillis();
-        
-        builder.append("\t").append(counter.getCounter()).append("\t").append(timeEndDualPivor-timeStartDualPivot).append("\n");
-  	
+  			builder.append("\t").append(counter.getCounter()).append("\t").append(timeEndMultiQuick-timeStartMultiQuick).append("\n");
+  		
   		}
 		}
 		System.out.println(builder.toString());
-		/*MultikeyQuicksort mqs = new MultikeyQuicksort(counter);
-		generateData(3);
-		mqs.sort(shuffledMultiQuick);
-		printArray(shuffledMultiQuick);*/
-	}
+			}
 
 	/**
 	 * generates the sorted set and shuffles it

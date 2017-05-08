@@ -20,9 +20,9 @@ public class Insertionsort {
      * @param  <T>   type of comparable to be sorted.
      * @param  arr   comparables to be sorted.
      */
-    public static <T extends Comparable<? super T>> void sort(T[] arr) {
+    public static <T extends Comparable<? super T>> void sort(T[] arr, Counter c) {
         if (arr != null) {
-            sort(arr, 0, arr.length - 1);
+            sort(arr, 0, arr.length - 1, c);
         }
     }
 
@@ -36,7 +36,8 @@ public class Insertionsort {
      * @param  low   low end of range to sort (inclusive).
      * @param  high  high end of range to sort (inclusive).
      */
-    public static <T extends Comparable<? super T>> void sort(T[] arr, int low, int high) {
+    public static <T extends Comparable<? super T>> void sort(T[] arr, int low, int high, Counter c) {
+      
         if (arr == null || arr.length < 2 || low < 0 || high <= low) {
             return;
         }
@@ -44,9 +45,9 @@ public class Insertionsort {
         for (int i = low + 1; i <= high; i++) {
             T pivot = arr[i];
             int j = i;
-            count();
-            while (j > low && pivot.compareTo(arr[j - 1]) < 0) {
             
+            while (j > low && pivot.compareTo(arr[j - 1]) < 0) {
+              c.counterUp(1);
                 arr[j] = arr[j - 1];
                 j--;
             }
@@ -65,13 +66,14 @@ public class Insertionsort {
      * @param  high     high offset into the array (exclusive).
      * @param  depth    offset of first character in each string to compare.
      */
-    public static void sort(CharSequence[] strings, int low, int high, int depth) {
+    public static void sort(CharSequence[] strings, int low, int high, int depth, Counter c) {
+      
         if (strings == null || low < 0 || high <= low || depth < 0) {
             return;
         }
         for (int i = low + 1; i < high; i++) {
             for (int j = i; j > low; j--) {
-              count();
+              c.counterUp(1);
                 int idx = depth;
                 char s = idx < strings[j - 1].length() ? strings[j - 1].charAt(idx) : 0;
                 char t = idx < strings[j].length() ? strings[j].charAt(idx) : 0;
@@ -92,12 +94,5 @@ public class Insertionsort {
         }
     }
     
-    /**
-     * Count.
-     */
-    private static void count() {
-      if (counter != null) {
-        counter.counterUp(1);
-      }
-    }
+   
 }
