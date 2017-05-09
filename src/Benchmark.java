@@ -29,7 +29,7 @@ public class Benchmark {
 		counter = new Counter();
 		StringBuilder builder = new StringBuilder();
 		builder.append("N").append("\tQCount").append("\tQTime").append("\tMCount").append("\tMTime").append("\tDCount").append("\tDTime").append("\n");
-		for(int arraySize =1; arraySize<8; arraySize++){
+		for(int arraySize =1; arraySize<3; arraySize++){
 		  builder.append(arraySize);
 		
   		for (int i = 0; i < numberOfRuns; i++) {

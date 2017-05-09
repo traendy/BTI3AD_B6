@@ -135,7 +135,8 @@ public class MultikeyQuicksort {
         int lowerElement = base + 1, lowerTemp = lowerElement;
         int highertemp = base + length - 1, higherElement = highertemp;
         /**
-         * Compares the number by didgets 
+         * Presorting
+         * Compares the number by didgets und swap the numbers
          */
         while (true) {
             for (; lowerTemp <= highertemp && (neighborCharDif = charAt(array[lowerTemp], depth) - charAtBase) <= 0; lowerTemp++) {
@@ -181,18 +182,21 @@ public class MultikeyQuicksort {
         vecswap(array, base, lowerTemp - neighborCharDif, neighborCharDif);
         neighborCharDif = Math.min(higherElement - highertemp, pivotHigh - higherElement - 1);
         vecswap(array, lowerTemp, pivotHigh - neighborCharDif, neighborCharDif);
+        //if lowerttemp>lowerelement
         if ((neighborCharDif = lowerTemp - lowerElement) > 1) {
             ssort(array, base, neighborCharDif, depth);
+           
         }
         
+        //if allzeros ==false
         if (!allzeros) {
-         
-            // Only descend if there was at least one string that was
-            // of equal or greater length than current depth.
             ssort(array, base + neighborCharDif, lowerElement + length - higherElement - 1, depth + 1);
+            
         }
+        //if higherElement > highertemp
         if ((neighborCharDif = higherElement - highertemp) > 1) {
             ssort(array, base + length - neighborCharDif, neighborCharDif, depth);
+            
         }
     }
     
