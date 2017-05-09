@@ -14,7 +14,7 @@ public class Quicksort {
 
     /** As with GCC std::sort delegate to insertion sort for ranges of
      * size below 16. */
-    private static final int THRESHOLD = 16;
+    private static final int THRESHOLD = 8;
     static Counter counter =null;
     /**
      * Creates a new instance of Quicksort.
@@ -50,7 +50,7 @@ public class Quicksort {
     public static <T extends Comparable<? super T>> void sort(T[] arr, int low, int high) {
         if (low + THRESHOLD > high) {
             // Insertion sort for small partitions.
-            Insertionsort.sort(arr, low, high, counter);
+         //   Insertionsort.sort(arr, low, high, counter);
         } else {
             // Choose a partition element
             int middle = (low + high) / 2;

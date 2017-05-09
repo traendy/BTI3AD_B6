@@ -16,7 +16,7 @@ public class MultikeyQuicksort {
 
     /** As with GCC std::sort delegate to insertion sort for ranges of
      * size below 16. */
-    private static final int GrenzeSelectionSort = 16;
+    private static final int GrenzeSelectionSort = 8;
     static Counter counter = null;
     /**
      * Creates a new instance of MultikeyQuicksort.
@@ -49,7 +49,7 @@ public class MultikeyQuicksort {
      */
     private static void vecswap(Object[] a, int i, int j, int n) {
         while (n-- > 0) {
-          count();
+            count();
             Object t = a[i];
             a[i] = a[j];
             a[j] = t;
@@ -110,10 +110,10 @@ public class MultikeyQuicksort {
         /*
          * If the array is small do InsertionSort
          */
-        if (length < GrenzeSelectionSort) {
-            Insertionsort.sort(array, base, base + length, depth, counter);
-            return;
-        }
+//        if (length < GrenzeSelectionSort) {
+//            Insertionsort.sort(array, base, base + length, depth, counter);
+//            return;
+//        }
         int pivotLow = base;
         int pivotMiddle = base + length / 2;
         int pivotHigh = base + length - 1;
