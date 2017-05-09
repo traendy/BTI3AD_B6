@@ -120,10 +120,10 @@ public class MultikeyQuicksort {
         int neighborCharDif;
         // On larger arrays, find a pseudo median of nine elements.
         if (length > 30) {
-            int d = length / 8;
-            pivotLow = med3(array, base, base + d, base + 2 * d, depth);
-            pivotMiddle = med3(array, base + length / 2 - d, pivotMiddle, base + length / 2 + d, depth);
-            pivotHigh = med3(array, base + length - 1 - 2 * d, base + length - 1 - d, pivotHigh, depth);
+            int offset = length / 8;
+            pivotLow = med3(array, base, base + offset, base + 2 * offset, depth);
+            pivotMiddle = med3(array, base + length / 2 - offset, pivotMiddle, base + length / 2 + offset, depth);
+            pivotHigh = med3(array, base + length - 1 - 2 * offset, base + length - 1 - offset, pivotHigh, depth);
         }
         pivotMiddle = med3(array, pivotLow, pivotMiddle, pivotHigh, depth);
         CharSequence temp = array[base];
